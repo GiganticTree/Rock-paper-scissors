@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Rock Paper Scissors</title>
+    </head>
+    <body>
+        <script>
+            let gameTally = 0;
+            let playerWins = 0;
+            let compWins = 0;
+
+            //randomly determines if the computer is rock, paper, or scissors
+            function computerPlay () {
+                rpsChooser = Math.random();
+                if (rpsChooser <= 1/3) {
+                    compChoice = 'rock';
+                } else if (rpsChooser <= 2/3) {
+                    compChoice = 'paper';
+                } else {
+                    compChoice = 'scissors';
+                }
+                return(compChoice);
+                }
+            
+            //One round of the game, inputing your and the computer's selection
+            function round (playerSelection, computerSelection) {
+                if (playerSelection=='rock' && computerSelection=='paper') {
+                    outcome = 'You lose... Paper covered your rock.';
+                    compWins++;
+                } else if (playerSelection=='rock' && computerSelection=='scissors') {
+                    outcome = 'You win! Rock banged up scissors!';
+                    playerWins++;
+                } else if (playerSelection=='paper' && computerSelection=='scissors') {
+                    outcome = 'You lose... Scissors cuts up your paper.';
+                    compWins++;
+                } else if (playerSelection=='paper' && computerSelection=='rock') {
+                    outcome = 'You win! Paper covers rock!';
+                    playerWins++;
+                } else if (playerSelection=='scissors' && computerSelection=='rock') {
+                    outcome = 'You lose... Rock banged up you scissors';
+                    compWins++;
+                } else if (playerSelection=='scissors' && computerSelection=='paper') {
+                    outcome = 'You win! Scissors slashed up paper.'
+                    playerWins++;
+                } else if ((playerSelection=='scissors' &&computerSelection=='scissors') || 
+                (playerSelection=='rock' &&computerSelection=='rock') ||
+                (playerSelection=='paper' &&computerSelection=='paper')){
+                    outcome = 'You both chose the same! Try again.';
+                    gameTally--;
+                } else {
+                    outcome = 'Please enter in only rock, paper, or scissors.'
+                    gameTally--;
+                }
+                gameTally++;
+
+                return(outcome);
+                
+
+            }
+           
+           //This function plays a 'full' game of 5 rounds.
+            function game () {
+                while (gameTally<5){
+                playerChoice = prompt('Choose rock, paper, or scissor and endure your destiny.');
+                playerChoice = playerChoice.toLowerCase();
+                compChoice = computerPlay();
+                console.log('You pick ' + playerChoice + ', while Computer has picked ' +
+                compChoice + '!');
+                console.log(round (playerChoice, compChoice ));
+                console.log('You have played ' + gameTally + ' game(s) where there was a fair winner.');
+                console.log('Score: You: ' + playerWins + ' Computer: ' + compWins);    
+                }
+            }
+
+            //Begins the series of 5 rounds.
+            game();
+            
+            //Reports the final result of the 5 round series
+            if (playerWins==3) {
+                console.log('Congrats! You beat the computer at a random game in this series.')
+            } else {
+                console.log('Tough break, you lost to the computer in this series.')
+            }
+        </script>
+    </body>
+</html>

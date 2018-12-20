@@ -1,13 +1,48 @@
 <!DOCTYPE html>
 <html>
     <head>
-        <title>Rock Paper Scissors</title>
+        <title>Rock Paper Scissors with Buttons</title>
+        <link href="style.css" rel="stylesheet" type="text/css">
     </head>
     <body>
+        <button id='rock'>Rock</button>
+        <button id='paper'>Paper</button>
+        <button id='scissors'>Scissors</button>
+        <div>
+            <p class=result></p>
+            <p class=playerwins>Player Wins: 0</p>
+            <p class=compwins>Computer Wins: 0</p>
+        </div>
         <script>
             let gameTally = 0;
             let playerWins = 0;
             let compWins = 0;
+
+            const rock = document.querySelector('#rock');
+            const paper = document.querySelector('#paper');
+            const scissors = document.querySelector('#scissors');
+            const playerscore =document.querySelector('.playerwins')
+            const compscore=document.querySelector('.compwins');
+            const victory = document.createElement('p');
+            const result=document.querySelector('.result');
+
+               //Reports the final result of the 5 round series
+
+
+            rock.addEventListener('click', function(){
+                playerChoice='rock';
+                game(playerChoice);
+            });
+
+            paper.addEventListener('click', function(){
+                playerChoice='paper';
+                game(playerChoice);
+            });
+
+            scissors.addEventListener('click', function(){
+                playerChoice='scissors';
+                game(playerChoice);
+            });
 
             //randomly determines if the computer is rock, paper, or scissors
             function computerPlay () {
@@ -43,8 +78,8 @@
                     outcome = 'You win! Scissors slashed up paper.'
                     playerWins++;
                 } else if ((playerSelection=='scissors' &&computerSelection=='scissors') || 
-                (playerSelection=='rock' &&computerSelection=='rock') ||
-                (playerSelection=='paper' &&computerSelection=='paper')){
+                            (playerSelection=='rock' &&computerSelection=='rock') ||
+                            (playerSelection=='paper' &&computerSelection=='paper')){
                     outcome = 'You both chose the same! Try again.';
                     gameTally--;
                 } else {
@@ -59,28 +94,32 @@
             }
            
            //This function plays a 'full' game of 5 rounds.
-            function game () {
-                while (gameTally<5){
-                playerChoice = prompt('Choose rock, paper, or scissor and endure your destiny.');
-                playerChoice = playerChoice.toLowerCase();
+            function game (playerChoice) {
+                //while (gameTally<5){
                 compChoice = computerPlay();
-                console.log('You pick ' + playerChoice + ', while Computer has picked ' +
-                compChoice + '!');
-                console.log(round (playerChoice, compChoice ));
-                console.log('You have played ' + gameTally + ' game(s) where there was a fair winner.');
-                console.log('Score: You: ' + playerWins + ' Computer: ' + compWins);    
-                }
+                round (playerChoice, compChoice );
+                result.textContent = 'You pick ' + playerChoice + ', while Computer has picked ' +
+                                        compChoice + '! \n You have played ' + gameTally + ' game(s) where there was a winner.';
+                compscore.textContent = 'Computer Wins: ' + compWins;
+                playerscore.textContent='Player Wins: ' + playerWins;   
+                victory.textContent = '';
+ 
+                if (playerWins==3) {
+                    victory.textContent = 'Congrats! You beat the computer in this series.';
+                    compWins=0;
+                    playerWins=0;
+            } else if (compWins==3){
+                victory.textContent = 'Tough break, you lost to the computer in this series.';
+                compWins=0;
+                playerWins=0;
             }
+            compscore.appendChild(victory);
 
-            //Begins the series of 5 rounds.
-            game();
+                }
+
+
             
-            //Reports the final result of the 5 round series
-            if (playerWins==3) {
-                console.log('Congrats! You beat the computer at a random game in this series.')
-            } else {
-                console.log('Tough break, you lost to the computer in this series.')
-            }
+         
         </script>
     </body>
 </html>
